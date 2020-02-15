@@ -1,0 +1,3 @@
+This folder is to be dedicated to the files or images made for the project before it's initial creation. I have placed a
+flow chart for how the program should ideally function once it is done. Until we speak with Peter further this will be the stand
+in. 
