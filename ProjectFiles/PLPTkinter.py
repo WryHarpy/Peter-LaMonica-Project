@@ -1,5 +1,6 @@
 import PLPDegreePaths
 from tkinter import *
+from tkinter import filedialog
 root = Tk()
 
 root.title("Student Course Prediction Program")
@@ -81,10 +82,26 @@ def DegreePath():
 #Course Prediction Screen.
 def CoursePrediction():
     top = Toplevel()
+    studentEntry=Entry(top, width=28)
+    courseEntry=Entry(top, width=28)
+    def studentFile():
+        root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select Student List CSV File",filetypes = (("CSV files","*.csv"),("all files","*.*")))
+        studentEntry.insert(0, root.filename)
+    def courseFile():
+        root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select Course List CSV File",filetypes = (("CSV files","*.csv"),("all files","*.*")))
+        courseEntry.insert(0, root.filename)
     top.title('Course Prediction System')
-    titleText = Label(top, text="This is the screen where the three Course Prediction System will be viewable.")
-    returnbutton = Button(top, text="Return to start screen.", command=top.destroy)
+    titleText = Label(top, text="Select two files, one for student data, and one for courses, to make a comparison for numbers.")
+    studentDatabutton = Button(top, text="Select a CSV file of student data.", command=studentFile)
+    courseListbutton = Button(top, text="Select a CSV file of course lists.", command=courseFile)
+    comparebutton= Button(top,text="Compare the list of student data to the course list.", command=courseFile)
+    returnbutton = Button(top, text="Close window and return to start screen.", command=top.destroy)
     titleText.pack()
+    studentDatabutton.pack()
+    studentEntry.pack()
+    courseListbutton.pack()
+    courseEntry.pack()
+    comparebutton.pack()
     returnbutton.pack()
 
 #Starting page Screen
@@ -92,7 +109,7 @@ def StartScreen():
     programTitle = Label(root, text ="Student Course Prediction Program")
     programSubtitle = Label(root, text ="Placeholder GUI created by John Hayes")
     degreePathButton = Button(root, text= "Click to View Degree Paths", fg="Black", bg="Pink", command= DegreePath)
-    studentCourseButton = Button(root, text= "Click to Predict a Students's Next Semester", fg="Black", bg="Cyan",command=CoursePrediction and Toplevel.quit)
+    studentCourseButton = Button(root, text= "Click to Predict a Students's Next Semester", fg="Black", bg="Cyan",command=CoursePrediction)
     exit_Button = Button(root, text="Close Program", command=root.quit)
     programTitle.pack()
     programSubtitle.pack()
