@@ -90,11 +90,25 @@ def CoursePrediction():
     def courseFile():
         root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select Course List CSV File",filetypes = (("CSV files","*.csv"),("all files","*.*")))
         courseEntry.insert(0, root.filename)
+    def dataComparison():
+        def dataPartone():
+            tripWords = ['ENGL', 'INT','MATH','PHIL','PSYC','HIST','ESCI','A0']
+            with open(studentEntry.get(), 'r') as oldfile, open('newfile.txt','w') as newfile:
+                for line in oldfile:
+                    if not any(tripWords in line for tripWords in tripWords):
+                        newfile.write(line)
+            temp = open('newfile.txt', 'r')
+            studentData=temp.read()
+            print(studentData)
+        dataPartone()
+        test2 =open(courseEntry.get(), 'r')
+        courseData = test2.read()
+        #print(courseData)
     top.title('Course Prediction System')
     titleText = Label(top, text="Select two files, one for student data, and one for courses, to make a comparison for numbers.")
     studentDatabutton = Button(top, text="Select a CSV file of student data.", command=studentFile)
     courseListbutton = Button(top, text="Select a CSV file of course lists.", command=courseFile)
-    comparebutton= Button(top,text="Compare the list of student data to the course list.", command=courseFile)
+    comparebutton= Button(top,text="Compare the list of student data to the course list.", command=dataComparison)
     returnbutton = Button(top, text="Close window and return to start screen.", command=top.destroy)
     titleText.pack()
     studentDatabutton.pack()
@@ -107,7 +121,7 @@ def CoursePrediction():
 #Starting page Screen
 def StartScreen():
     programTitle = Label(root, text ="Student Course Prediction Program")
-    programSubtitle = Label(root, text ="Placeholder GUI created by John Hayes")
+    programSubtitle = Label(root, text ="Placeholder GUI")
     degreePathButton = Button(root, text= "Click to View Degree Paths", fg="Black", bg="Pink", command= DegreePath)
     studentCourseButton = Button(root, text= "Click to Predict a Students's Next Semester", fg="Black", bg="Cyan",command=CoursePrediction)
     exit_Button = Button(root, text="Close Program", command=root.quit)
