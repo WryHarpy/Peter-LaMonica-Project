@@ -97,13 +97,14 @@ def CoursePrediction():
                 for line in oldfile:
                     if not any(tripWords in line for tripWords in tripWords):
                         newfile.write(line)
+                        tripWords.append(line[26:29])
             temp = open('newfile.txt', 'r')
             studentData=temp.read()
             print(studentData)
         dataPartone()
         test2 =open(courseEntry.get(), 'r')
         courseData = test2.read()
-        #print(courseData)
+        print(courseData)
     top.title('Course Prediction System')
     titleText = Label(top, text="Select two files, one for student data, and one for courses, to make a comparison for numbers.")
     studentDatabutton = Button(top, text="Select a CSV file of student data.", command=studentFile)
