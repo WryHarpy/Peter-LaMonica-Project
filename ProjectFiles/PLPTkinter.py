@@ -4,61 +4,46 @@ from tkinter import filedialog
 root = Tk()
 
 root.title("Student Course Prediction Program")
-
-'''
-    e = Entry(root)
-    e.pack()
-    e.insert(0, "Enter Your Name: ")
-'''
 #Degree Path Screen.
 def DegreePath():
     temp= open("temp.txt", "a")
     open("temp.txt", 'w').close()
     def cisDisplay():
         for x in PLPDegreePaths.computerScienceInnovation:
-            #print (x)
             temp.writelines(x+'\n')
             for y in PLPDegreePaths.computerScienceInnovation[x]:
-                #print (y, ':', PLPDegreePaths.computerScienceInnovation[x][y])
                 temp2 = (y + ': '+ PLPDegreePaths.computerScienceInnovation[x][y]+'\n')
                 temp.writelines(str(temp2))
         temp.close()
         def cisPrint():
             lines=open("temp.txt","r")
             data = lines.read()
-            #print(data)
             cisCourses = Label(top, text = data)
             cisCourses.pack()
         cisPrint()
     def cloudServiceDisplay():
         for x in PLPDegreePaths.cloudServices:
-            #print (x)
             temp.writelines(x+'\n')
             for y in PLPDegreePaths.cloudServices[x]:
-                #print (y, ':', PLPDegreePaths.computerScienceInnovation[x][y])
                 temp2 = (y + ': '+ PLPDegreePaths.cloudServices[x][y]+'\n')
                 temp.writelines(str(temp2))
         temp.close()
         def clsPrint():
             lines=open("temp.txt","r")
             data = lines.read()
-            #print(data)
             cisCourses = Label(top, text = data)
             cisCourses.pack()
         clsPrint()
     def cyberSecurityDisplay():
         for x in PLPDegreePaths.cyberSecurity:
-            #print (x)
             temp.writelines(x+'\n')
             for y in PLPDegreePaths.cyberSecurity[x]:
-                #print (y, ':', PLPDegreePaths.computerScienceInnovation[x][y])
                 temp2 = (y + ': '+ PLPDegreePaths.cyberSecurity[x][y]+'\n')
                 temp.writelines(str(temp2))
         temp.close()
         def cysPrint():
             lines=open("temp.txt","r")
             data = lines.read()
-            #print(data)
             cisCourses = Label(top, text = data)
             cisCourses.pack()
         cysPrint()
@@ -91,20 +76,72 @@ def CoursePrediction():
         root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select Course List CSV File",filetypes = (("CSV files","*.csv"),("all files","*.*")))
         courseEntry.insert(0, root.filename)
     def dataComparison():
-        def dataPartone():
-            tripWords = ['ENGL', 'INT','MATH','PHIL','PSYC','HIST','ESCI','A0']
             with open(studentEntry.get(), 'r') as oldfile, open('newfile.txt','w') as newfile:
+                tripWords = ['ENGL','INT','MATH','PHIL','PSYC','HIST','ESCI']
+                tripList = ['A0']
                 for line in oldfile:
+                    if any(tripList in line for tripList in tripList):
+                        tripWords = ['ENGL','INT','MATH','PHIL','PSYC','HIST','ESCI']
                     if not any(tripWords in line for tripWords in tripWords):
                         newfile.write(line)
-                        tripWords.append(line[26:29])
-            temp = open('newfile.txt', 'r')
-            studentData=temp.read()
-            print(studentData)
-        dataPartone()
-        test2 =open(courseEntry.get(), 'r')
-        courseData = test2.read()
-        print(courseData)
+                        tripWords.append(line[23:31])
+            with open('newfile.txt', 'r') as oldfile, open('newerfile.txt','w') as newfile:
+                tripWords = ['CIS','CYBD','CSIT','CSCN']
+                tripList = ['A0']
+                for line in oldfile:
+                        if any(tripList in line for tripList in tripList):
+                            newfile.write('\n'+'*'* 20)
+                        if any(tripWords in line for tripWords in tripWords):
+                            newfile.write('\n'+ line[23:31])
+            with open('newerfile.txt', 'r') as newerfile, open ('studentData.txt', 'w') as studentData:
+                temp = newerfile.read()
+                temp=temp.replace(",","")
+                studentData.write(temp)            
+            with open (courseEntry.get(), 'r') as courseTemp, open ('courseFixed.txt','w') as courseData:
+                temp = courseTemp.read()
+                temp=temp.replace("M","")
+                temp=temp.replace("(","")
+                temp=temp.replace(")","")
+                temp=temp.replace(",","")
+                courseData.write(temp)
+            courseDataHolder = []
+            tripListTwo=['********************']
+            with open('courseFixed.txt', 'r') as dataTest:
+                for line in dataTest:
+                    courseDataHolder.append(line)
+                    courseDataHolder=([s.strip('\n') for s in courseDataHolder])
+            #We need to convert the course list into a dictionary that allows the courses to have storable values.
+            studentDict = {i : 0 for i in courseDataHolder}
+            #print(studentDict)
+            #The Final Stretch
+            with open('studentData.txt', 'r') as studentData:
+                courseDataHolder = []
+                counter = 0
+                for line in studentData:
+                    if any(tripListTwo in line for tripListTwo in tripListTwo):
+                        if courseDataHolder == []:
+                            with open('courseFixed.txt', 'r') as dataTest:
+                                for line in dataTest:
+                                    courseDataHolder.append(line)
+                                    courseDataHolder=([s.strip('\n') for s in courseDataHolder])
+                                    counter = 0
+                        else:
+                            print(courseDataHolder)
+                            for element in courseDataHolder:
+                                studentDict[element] += 1
+                            courseDataHolder = []
+                        with open('courseFixed.txt', 'r') as dataTest:
+                            for line in dataTest:
+                                courseDataHolder.append(line)
+                                courseDataHolder=([s.strip('\n') for s in courseDataHolder])
+                                counter = 0
+                    if any(courseDataHolder in line for courseDataHolder in courseDataHolder):
+                        courseDataHolder.remove(courseDataHolder[counter])
+                        counter = counter + 1     
+            finalOutcome = Label(top, text = studentDict)
+            finalOutcome.pack()
+            #print(courseDataHolder)
+            #print(dataTest)
     top.title('Course Prediction System')
     titleText = Label(top, text="Select two files, one for student data, and one for courses, to make a comparison for numbers.")
     studentDatabutton = Button(top, text="Select a CSV file of student data.", command=studentFile)
