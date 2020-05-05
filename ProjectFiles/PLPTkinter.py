@@ -114,36 +114,23 @@ def CoursePrediction():
                     courseDataHolder=([s.strip('\n') for s in courseDataHolder])
             #We need to convert the course list into a dictionary that allows the courses to have storable values.
             studentDict = {i : 0 for i in courseDataHolder}
-            #print(studentDict)
+            tempDict = studentDict.copy()
             #The Final Stretch
             with open('studentData.txt', 'r') as studentData:
-                courseDataHolder = []
                 counter = 0
                 for line in studentData:
                     if any(tripListTwo in line for tripListTwo in tripListTwo):
-                        if courseDataHolder == []:
-                            with open('courseFixed.txt', 'r') as dataTest:
-                                for line in dataTest:
-                                    courseDataHolder.append(line)
-                                    courseDataHolder=([s.strip('\n') for s in courseDataHolder])
-                                    counter = 0
-                        else:
-                            print(courseDataHolder)
-                            for element in courseDataHolder:
-                                studentDict[element] += 1
-                            courseDataHolder = []
-                        with open('courseFixed.txt', 'r') as dataTest:
-                            for line in dataTest:
-                                courseDataHolder.append(line)
-                                courseDataHolder=([s.strip('\n') for s in courseDataHolder])
-                                counter = 0
-                    if any(courseDataHolder in line for courseDataHolder in courseDataHolder):
-                        courseDataHolder.remove(courseDataHolder[counter])
-                        counter = counter + 1     
+                        counter = counter + 1
+                        print(counter , 'student(s)')
+                    else:
+                        temp = (line.strip('\n'))
+                        tempDict[temp] = tempDict.get(temp,0) + 1
+                        print(tempDict[temp])
+            #This gives the final value of the students.
+            for element in studentDict:
+                studentDict[element] = counter - tempDict.get(element)
             finalOutcome = Label(top, text = studentDict)
             finalOutcome.pack()
-            #print(courseDataHolder)
-            #print(dataTest)
     top.title('Course Prediction System')
     titleText = Label(top, text="Select two files, one for student data, and one for courses, to make a comparison for numbers.")
     studentDatabutton = Button(top, text="Select a CSV file of student data.", command=studentFile)
