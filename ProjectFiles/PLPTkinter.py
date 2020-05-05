@@ -88,11 +88,13 @@ def CoursePrediction():
             with open('newfile.txt', 'r') as oldfile, open('newerfile.txt','w') as newfile:
                 tripWords = ['CIS','CYBD','CSIT','CSCN']
                 tripList = ['A0']
+                failingGrade = [',D,',',F,']
                 for line in oldfile:
                         if any(tripList in line for tripList in tripList):
                             newfile.write('\n'+'*'* 20)
                         if any(tripWords in line for tripWords in tripWords):
-                            newfile.write('\n'+ line[23:31])
+                            if not any(failingGrade in line for failingGrade in failingGrade):
+                                newfile.write('\n'+ line[23:31])
             with open('newerfile.txt', 'r') as newerfile, open ('studentData.txt', 'w') as studentData:
                 temp = newerfile.read()
                 temp=temp.replace(",","")
