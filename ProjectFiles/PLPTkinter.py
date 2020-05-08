@@ -9,8 +9,8 @@ root = Tk()
 root.title("Student Course Prediction Program")
 #Degree Path Screen.
 def DegreePath():
-    temp= open("temp.txt", "a")
-    open("temp.txt", 'w').close()
+    temp= open("CoursePrint.txt", "a")
+    open("CoursePrint.txt", 'w').close()
     #Displays the Computer Science Courses
     def cisDisplay():
         for x in PLPDegreePaths.computerScienceInnovation:
@@ -20,7 +20,7 @@ def DegreePath():
                 temp.writelines(str(temp2))
         temp.close()
         def cisPrint():
-            lines=open("temp.txt","r")
+            lines=open("CoursePrint.txt","r")
             data = lines.read()
             cisCourses = Label(top, text = data)
             cisCourses.pack()
@@ -34,7 +34,7 @@ def DegreePath():
                 temp.writelines(str(temp2))
         temp.close()
         def clsPrint():
-            lines=open("temp.txt","r")
+            lines=open("CoursePrint.txt","r")
             data = lines.read()
             cisCourses = Label(top, text = data)
             cisCourses.pack()
@@ -48,7 +48,7 @@ def DegreePath():
                 temp.writelines(str(temp2))
         temp.close()
         def cysPrint():
-            lines=open("temp.txt","r")
+            lines=open("CoursePrint.txt","r")
             data = lines.read()
             cisCourses = Label(top, text = data)
             cisCourses.pack()
@@ -68,7 +68,7 @@ def DegreePath():
     cloudService.pack()
     cyberSecurity.pack()
     returnbutton.pack()
-    topframe = LabelFrame(top, text="This is a test", padx=5,pady=5)
+    topframe = LabelFrame(top,padx=5,pady=5)
     topframe.pack(padx=10,pady=10)
 
 #Course Prediction Screen.
@@ -160,6 +160,8 @@ def CoursePrediction():
     courseEntry.pack()
     comparebutton.pack()
     returnbutton.pack()
+    topframe = LabelFrame(top,padx=5,pady=5)
+    topframe.pack(padx=10,pady=10)
 
 #Starting page Screen
 def StartScreen():
